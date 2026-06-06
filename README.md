@@ -54,10 +54,10 @@
   <a href="https://www.kaggle.com/competitions/kaggle-playground-series-season-4/leaderboard" target="_blank" style="margin: 10px;">
     <img src="https://img.shields.io/badge/🧠 Depression+Prediction-F7931E?style=for-the-badge&logo=kaggle&logoColor=white" alt="Depression Prediction"/>
   </a>
-  <a href="https://github.com/Sanny-Un-Sowadh-Wamik/Titanic-ML" target="_blank" style="margin: 10px;">
+  <a href="https://github.com/Sanny-Un-Sowadh-Wamik/Titanic---Machine-Learning-from-Disaster" target="_blank" style="margin: 10px;">
     <img src="https://img.shields.io/badge/🚢 Titanic+Predictor-0052CC?style=for-the-badge&logo=apache&logoColor=white" alt="Titanic Predictor"/>
   </a>
-  <a href="https://github.com/Sanny-Un-Sowadh-Wamik/House-Prices" target="_blank" style="margin: 10px;">
+  <a href="https://github.com/Sanny-Un-Sowadh-Wamik/House-Prices-Prediction" target="_blank" style="margin: 10px;">
     <img src="https://img.shields.io/badge/🏡 House+Prices-7B1FA2?style=for-the-badge&logo=homeassistant&logoColor=white" alt="House Prices"/>
   </a>
 </div>

@@ -15,6 +15,7 @@
   js/
     main.js           ← Slide navigation, language toggle, effects
     canvas.js         ← DataScienceCanvas animation (inner pages)
+    lab.js            ← Interactive Data Lab (clustering, regression, game)
   src/
     hero-desktop.mov  ← Background video (desktop ≥ 769px)
     hero-mobile.mov   ← Background video (mobile ≤ 768px)
@@ -119,13 +120,13 @@
   <div class="slide-counter" aria-live="polite">
     <span class="current" id="counterCurrent">01</span>
     <span style="color:var(--text-dim)"> // </span>
-    <span id="counterTotal">06</span>
+    <span id="counterTotal">07</span>
   </div>
 
 
   <!-- ══════════════════════════════════════════
        SLIDES WRAPPER
-       All 6 slides (only 1 visible at a time)
+       All 7 slides (only 1 visible at a time)
        ══════════════════════════════════════════ -->
   <main class="slides-wrapper" role="main">
 
@@ -157,26 +158,28 @@
         <h1 class="hero-name anim-item">SANNY UN<br>SOWADH WAMIK</h1>
 
         <p class="hero-subtitle anim-item"
-           data-jp="データサイエンティスト ・ 機械学習エンジニア"
-           data-en="DATA SCIENTIST · ML ENGINEER">
-          データサイエンティスト ・ 機械学習エンジニア
+           data-jp="データサイエンティスト・データアナリスト・MLエンジニア・データエンジニア"
+           data-en="DATA SCIENTIST · DATA ANALYST · ML ENGINEER · DATA ENGINEER">
+          データサイエンティスト・データアナリスト・MLエンジニア・データエンジニア
         </p>
 
         <div class="hero-divider anim-item"></div>
 
-        <!-- Technology stack tags -->
+        <!-- Technology stack tags (key resume keywords) -->
         <div class="hero-tags anim-item">
           <span class="hero-tag">Python</span>
-          <span class="hero-tag">Machine Learning</span>
-          <span class="hero-tag" data-jp="予測モデリング"  data-en="Predictive Modelling">予測モデリング</span>
-          <span class="hero-tag" data-jp="データ可視化"   data-en="Data Visualisation">データ可視化</span>
-          <span class="hero-tag">R</span>
-          <span class="hero-tag" data-jp="顧客分析"       data-en="Customer Analytics">顧客分析</span>
+          <span class="hero-tag">SQL</span>
+          <span class="hero-tag">XGBoost</span>
+          <span class="hero-tag">MLflow</span>
+          <span class="hero-tag">FastAPI</span>
+          <span class="hero-tag">Docker</span>
+          <span class="hero-tag">LSTM</span>
+          <span class="hero-tag">SHAP</span>
         </div>
 
         <!-- Call-to-action → jumps to Contact slide -->
         <button class="hero-cta anim-item"
-                onclick="goToSlide(5)"
+                onclick="goToSlide(6)"
                 data-jp="[ 連絡先 →  ]"
                 data-en="[ CONTACT → ]">
           [ 連絡先 → ]
@@ -205,14 +208,14 @@
               style="margin-bottom:14px">背景</h2>
 
           <p class="about-text anim-item"
-             data-jp="RMIT大学のデータサイエンス学部生。機械学習の分類・回帰、顧客セグメンテーション、不正検知、需要予測、地理空間データ可視化を中心に、実世界のデータ問題を解決するプロジェクトに取り組んでいます。Python・Jupyter・R・SQLを使い、EDAから本番モデルまで一貫した分析パイプラインを構築します。"
-             data-en="Data Science undergraduate at RMIT University. Focused on solving real-world data problems through ML classification &amp; regression, customer segmentation, fraud detection, demand forecasting, and geospatial visualisation. Building end-to-end analytics pipelines from EDA to production models using Python, Jupyter, R, and SQL.">
-            RMIT大学のデータサイエンス学部生。機械学習の分類・回帰、顧客セグメンテーション、不正検知、需要予測、地理空間データ可視化を中心に、実世界のデータ問題を解決するプロジェクトに取り組んでいます。Python・Jupyter・R・SQLを使い、EDAから本番モデルまで一貫した分析パイプラインを構築します。
+             data-jp="RMIT大学データサイエンス最終学年（2027年卒業見込み）。機械学習モデルと、それを本番へ届けるパイプライン・APIを構築します。3つのプロジェクトはMLflowトラッキングとCI/CDを備えたライブサービスとして稼働中。SQL・Power BI・Tableauも得意で、大規模で雑然としたデータを実行可能な意思決定へと変えます。"
+             data-en="Final-year Data Science student at RMIT (graduating 2027). I build machine-learning models and the pipelines &amp; APIs that carry them into production — three projects run as live, documented services with MLflow tracking and CI/CD. Just as comfortable in SQL and Power BI / Tableau, turning large, messy datasets into decisions people can act on.">
+            RMIT大学データサイエンス最終学年（2027年卒業見込み）。機械学習モデルと、それを本番へ届けるパイプライン・APIを構築します。3つのプロジェクトはMLflowトラッキングとCI/CDを備えたライブサービスとして稼働中。SQL・Power BI・Tableauも得意で、大規模で雑然としたデータを実行可能な意思決定へと変えます。
           </p>
 
           <div class="about-info-row anim-item">
             <span class="label" data-jp="学歴"   data-en="EDU">学歴</span>
-            <span data-jp="RMIT大学 データサイエンス学士" data-en="B. Data Science — RMIT University">RMIT大学 データサイエンス学士</span>
+            <span data-jp="RMIT大学 データサイエンス学士（2027年見込）" data-en="B. Data Science — RMIT (Expected 2027)">RMIT大学 データサイエンス学士（2027年見込）</span>
           </div>
           <div class="about-info-row anim-item">
             <span class="label" data-jp="所在地" data-en="LOC">所在地</span>
@@ -227,19 +230,19 @@
         <!-- Right column: stat cards -->
         <div class="about-stats anim-item">
           <div class="stat-card cyber-border">
-            <div class="stat-value">16</div>
+            <div class="stat-value" data-countup>21</div>
             <div class="stat-label" data-jp="リポジトリ" data-en="REPOS">リポジトリ</div>
           </div>
           <div class="stat-card cyber-border">
-            <div class="stat-value">7+</div>
+            <div class="stat-value" data-countup>10+</div>
             <div class="stat-label" data-jp="MLモデル" data-en="ML MODELS">MLモデル</div>
           </div>
           <div class="stat-card cyber-border">
-            <div class="stat-value">5+</div>
+            <div class="stat-value" data-countup>5+</div>
             <div class="stat-label" data-jp="分析言語" data-en="LANGUAGES">分析言語</div>
           </div>
           <div class="stat-card cyber-border">
-            <div class="stat-value">15</div>
+            <div class="stat-value" data-countup>18</div>
             <div class="stat-label" data-jp="公開PJ" data-en="PUBLIC PJ">公開PJ</div>
           </div>
         </div>
@@ -266,51 +269,67 @@
         <div class="skills-grid">
 
           <div class="skill-card cyber-border anim-item">
-            <h3>PYTHON</h3>
-            <p data-jp="scikit-learn, pandas, matplotlib, seaborn, XGBoost"
-               data-en="scikit-learn, pandas, matplotlib, seaborn, XGBoost">
-              scikit-learn, pandas, matplotlib, seaborn, XGBoost</p>
-            <div class="skill-bar"><div class="skill-bar-fill" data-w="95%"></div></div>
-          </div>
-
-          <div class="skill-card cyber-border anim-item">
-            <h3>JUPYTER NOTEBOOK</h3>
-            <p data-jp="EDA、モデル訓練、結果の可視化と再現性"
-               data-en="EDA, model training, reproducible analysis">
-              EDA、モデル訓練、結果の可視化と再現性</p>
-            <div class="skill-bar"><div class="skill-bar-fill" data-w="92%"></div></div>
+            <h3 data-jp="言語" data-en="LANGUAGES">言語</h3>
+            <p>Python · SQL · R</p>
+            <div class="skill-bar-row">
+              <div class="skill-bar"><div class="skill-bar-fill" data-w="95%"></div></div>
+              <span class="skill-pct" data-countup data-cu-target="95" data-cu-suffix="%">0%</span>
+            </div>
           </div>
 
           <div class="skill-card cyber-border anim-item">
             <h3 data-jp="機械学習" data-en="MACHINE LEARNING">機械学習</h3>
-            <p data-jp="分類、回帰、クラスタリング、不均衡データ、AUC-ROC"
-               data-en="Classification, regression, clustering, imbalanced data, AUC-ROC">
-              分類、回帰、クラスタリング、不均衡データ、AUC-ROC</p>
-            <div class="skill-bar"><div class="skill-bar-fill" data-w="90%"></div></div>
+            <p data-jp="回帰・分類, XGBoost, LightGBM, LSTM/深層学習, 時系列予測, 異常検知, SMOTE, PCA, A/Bテスト"
+               data-en="Regression, Classification, XGBoost, LightGBM, LSTM / Deep Learning, Time-Series, Anomaly Detection, SMOTE, PCA, A/B Testing">
+              Regression, Classification, XGBoost, LightGBM, LSTM, Time-Series, SMOTE, PCA, A/B Testing</p>
+            <div class="skill-bar-row">
+              <div class="skill-bar"><div class="skill-bar-fill" data-w="92%"></div></div>
+              <span class="skill-pct" data-countup data-cu-target="92" data-cu-suffix="%">0%</span>
+            </div>
           </div>
 
           <div class="skill-card cyber-border anim-item">
-            <h3 data-jp="BI ＆ 分析" data-en="BI &amp; ANALYTICS">BI ＆ 分析</h3>
-            <p data-jp="RFMセグメント、需要予測、サージ分析"
-               data-en="RFM segmentation, demand forecasting, surge analysis">
-              RFMセグメント、需要予測、サージ分析</p>
-            <div class="skill-bar"><div class="skill-bar-fill" data-w="85%"></div></div>
+            <h3 data-jp="MLツール ＆ MLOps" data-en="ML TOOLING &amp; MLOPS">MLツール ＆ MLOps</h3>
+            <p data-jp="scikit-learn, Optuna, SHAP, MLflow, FastAPI, Docker, GitHub Actions (CI/CD), REST API, WebSockets"
+               data-en="scikit-learn, Optuna, SHAP, MLflow, FastAPI, Docker, GitHub Actions (CI/CD), REST APIs, WebSockets">
+              scikit-learn, Optuna, SHAP, MLflow, FastAPI, Docker, GitHub Actions, REST APIs, WebSockets</p>
+            <div class="skill-bar-row">
+              <div class="skill-bar"><div class="skill-bar-fill" data-w="90%"></div></div>
+              <span class="skill-pct" data-countup data-cu-target="90" data-cu-suffix="%">0%</span>
+            </div>
           </div>
 
           <div class="skill-card cyber-border anim-item">
-            <h3>R</h3>
-            <p data-jp="地理空間可視化、統計モデリング、ggplot2"
-               data-en="Geospatial viz, statistical modelling, ggplot2">
-              地理空間可視化、統計モデリング、ggplot2</p>
-            <div class="skill-bar"><div class="skill-bar-fill" data-w="72%"></div></div>
+            <h3 data-jp="データ ＆ ビッグデータ" data-en="DATA &amp; BIG DATA">データ ＆ ビッグデータ</h3>
+            <p data-jp="pandas, NumPy, Apache Spark, Hadoop, PostgreSQL, Supabase, GeoPandas, ETL/ELT"
+               data-en="pandas, NumPy, Apache Spark, Hadoop, PostgreSQL, Supabase, GeoPandas, ETL / ELT">
+              pandas, NumPy, Apache Spark, Hadoop, PostgreSQL, Supabase, GeoPandas, ETL / ELT</p>
+            <div class="skill-bar-row">
+              <div class="skill-bar"><div class="skill-bar-fill" data-w="86%"></div></div>
+              <span class="skill-pct" data-countup data-cu-target="86" data-cu-suffix="%">0%</span>
+            </div>
           </div>
 
           <div class="skill-card cyber-border anim-item">
-            <h3>TYPESCRIPT</h3>
-            <p data-jp="フルスタックウェブアプリ、AI統合、データダッシュボード"
-               data-en="Full-stack web apps, AI integration, data dashboards">
-              フルスタックウェブアプリ、AI統合、データダッシュボード</p>
-            <div class="skill-bar"><div class="skill-bar-fill" data-w="78%"></div></div>
+            <h3 data-jp="可視化" data-en="VISUALISATION">可視化</h3>
+            <p data-jp="Power BI, Tableau, Streamlit, Plotly, Matplotlib, Seaborn, Excel"
+               data-en="Power BI, Tableau, Streamlit, Plotly, Matplotlib, Seaborn, Excel">
+              Power BI, Tableau, Streamlit, Plotly, Matplotlib, Seaborn, Excel</p>
+            <div class="skill-bar-row">
+              <div class="skill-bar"><div class="skill-bar-fill" data-w="88%"></div></div>
+              <span class="skill-pct" data-countup data-cu-target="88" data-cu-suffix="%">0%</span>
+            </div>
+          </div>
+
+          <div class="skill-card cyber-border anim-item">
+            <h3 data-jp="ワークフロー" data-en="WORKFLOW">ワークフロー</h3>
+            <p data-jp="Git, Jupyter, Linux, pytest, n8n（ワークフロー自動化）"
+               data-en="Git, Jupyter, Linux, pytest, n8n (workflow automation)">
+              Git, Jupyter, Linux, pytest, n8n (workflow automation)</p>
+            <div class="skill-bar-row">
+              <div class="skill-bar"><div class="skill-bar-fill" data-w="90%"></div></div>
+              <span class="skill-pct" data-countup data-cu-target="90" data-cu-suffix="%">0%</span>
+            </div>
           </div>
 
         </div>
@@ -335,61 +354,66 @@
 
         <div class="projects-grid">
 
-          <a href="https://github.com/Sanny-Un-Sowadh-Wamik/Credit-Card-Fraud-Detection"
-             target="_blank" rel="noopener"
-             class="project-card cyber-border anim-item">
-            <div class="p-lang">PYTHON / JUPYTER</div>
-            <h3 data-jp="クレジットカード不正検知" data-en="Credit Card Fraud Detection">クレジットカード不正検知</h3>
-            <p data-jp="不均衡データセットに対する二値分類MLパイプライン。オーバー/アンダーサンプリング、特徴エンジニアリング、精度・再現率・AUC-ROC評価。"
-               data-en="Binary classification ML pipeline for imbalanced datasets. Over/undersampling, feature engineering, precision/recall/AUC-ROC evaluation.">
-              不均衡データセットに対する二値分類MLパイプライン。オーバー/アンダーサンプリング、特徴エンジニアリング、精度・再現率・AUC-ROC評価。</p>
+          <div class="project-card cyber-border anim-item">
+            <div class="p-lang">PYTHON · XGBOOST · LSTM · MLFLOW · FASTAPI</div>
+            <h3 data-jp="株価予測プラットフォーム — MLOps" data-en="Stock-Price Forecasting — MLOps">株価予測プラットフォーム — MLOps</h3>
+            <p data-jp="次の日のASX騰落をARIMA・ランダムウォークに勝る精度で予測（51.8% 対 48.8%）。RSI/MACD/ボリンジャー特徴量とリーク防止のウォークフォワード検証を10銘柄（18,460サンプル）に適用。FastAPI /predict＋Streamlit、MLflowレジストリ、pytest、GitHub Actions CIでライブ稼働。"
+               data-en="Beat ARIMA &amp; a coin-flip on next-day ASX direction (51.8% vs 48.8%) with RSI/MACD/Bollinger features and leakage-free walk-forward CV across 10 equities (18,460 samples). Served behind a FastAPI /predict endpoint + Streamlit, MLflow registry, pytest &amp; GitHub Actions CI — running live.">
+              Beat ARIMA &amp; a coin-flip on next-day ASX direction (51.8% vs 48.8%) with engineered RSI/MACD/Bollinger features and leakage-free walk-forward CV across 10 equities (18,460 samples). Served via a FastAPI /predict endpoint + Streamlit, MLflow registry, pytest &amp; GitHub Actions CI — running live.</p>
             <div class="p-meta">
-              <span>4.2 MB</span>
-              <span data-jp="2025年12月" data-en="Dec 2025">2025年12月</span>
+              <span class="p-metric">51.8% DIR. ACCURACY</span>
+              <div class="p-links">
+                <a href="https://sanny2005-asx-stock-forecaster.hf.space/" target="_blank" rel="noopener" class="p-link" data-jp="ライブ ↗" data-en="Live ↗">Live ↗</a>
+                <a href="https://sanny2005-asx-forecaster-api.hf.space/docs" target="_blank" rel="noopener" class="p-link">API ↗</a>
+                <a href="https://github.com/Sanny-Un-Sowadh-Wamik/stock-forecasting-mlops" target="_blank" rel="noopener" class="p-link" data-jp="コード ↗" data-en="Code ↗">Code ↗</a>
+              </div>
             </div>
-          </a>
+          </div>
 
-          <a href="https://github.com/Sanny-Un-Sowadh-Wamik/RFM-customer-segmentation-analysis"
-             target="_blank" rel="noopener"
-             class="project-card cyber-border anim-item">
-            <div class="p-lang">PYTHON</div>
-            <h3 data-jp="RFM顧客セグメンテーション" data-en="RFM Customer Segmentation">RFM顧客セグメンテーション</h3>
-            <p data-jp="RFM分析とK-Meansクラスタリングで顧客をChampions・Loyal・At Riskなどに分類。ターゲットマーケティング戦略への実用的インサイト。"
-               data-en="Customer segmentation using RFM framework &amp; K-Means clustering into Champions, Loyal, At Risk groups. Actionable insights for targeted marketing.">
-              RFM分析とK-Meansクラスタリングで顧客をChampions・Loyal・At Riskなどに分類。ターゲットマーケティング戦略への実用的インサイト。</p>
+          <div class="project-card cyber-border anim-item">
+            <div class="p-lang">PYTHON · XGBOOST · SMOTE · SHAP · FASTAPI WS</div>
+            <h3 data-jp="リアルタイム不正検知" data-en="Real-Time Credit-Card Fraud Detection">リアルタイム不正検知</h3>
+            <p data-jp="284,807件（不正0.17%）の不均衡データで不正の85.9%を84.7%の適合率で検出（PR-AUC 0.88, ROC-AUC 0.99）。コスト考慮型XGBoost＋Isolation Forestのアンサンブルと学習foldのみのSMOTE。SHAP理由コードをFastAPI WebSocketでライブ配信し Alert / Review / OK に分類。"
+               data-en="Caught 85.9% of fraud at 84.7% precision (PR-AUC 0.88, ROC-AUC 0.99) on 284,807 transactions (0.17% fraud) with a cost-sensitive XGBoost + Isolation Forest ensemble and train-only SMOTE. SHAP reason codes streamed live over a FastAPI WebSocket into Alert / Review / OK.">
+              Caught 85.9% of fraud at 84.7% precision (PR-AUC 0.88, ROC-AUC 0.99) on 284,807 transactions (0.17% fraud) with a cost-sensitive XGBoost + Isolation Forest ensemble and train-only SMOTE. SHAP reason codes streamed live over a FastAPI WebSocket.</p>
             <div class="p-meta">
-              <span>22.6 MB</span>
-              <span data-jp="2025年11月" data-en="Nov 2025">2025年11月</span>
+              <span class="p-metric">PR-AUC 0.88 · ROC-AUC 0.99</span>
+              <div class="p-links">
+                <a href="https://sanny2005-realtime-fraud-detection.hf.space/" target="_blank" rel="noopener" class="p-link" data-jp="ライブ ↗" data-en="Live ↗">Live ↗</a>
+                <a href="https://sanny2005-fraud-detection-api.hf.space/docs" target="_blank" rel="noopener" class="p-link">API ↗</a>
+                <a href="https://github.com/Sanny-Un-Sowadh-Wamik/realtime-fraud-detection" target="_blank" rel="noopener" class="p-link" data-jp="コード ↗" data-en="Code ↗">Code ↗</a>
+              </div>
             </div>
-          </a>
+          </div>
 
-          <a href="https://github.com/Sanny-Un-Sowadh-Wamik/Uber-Ride-Analytics-2024---Data-Science-Project"
-             target="_blank" rel="noopener"
-             class="project-card cyber-border anim-item">
-            <div class="p-lang">PYTHON / JUPYTER</div>
-            <h3 data-jp="Uber乗車分析 2024" data-en="Uber Ride Analytics 2024">Uber乗車分析 2024</h3>
-            <p data-jp="乗車パターン・需要トレンド・サージ価格行動の分析と予測モデリング。リッチな可視化と需要予測を含むE2Eプロジェクト。"
-               data-en="End-to-end analysis of ride patterns, demand trends, surge pricing behaviour, and predictive modelling with rich visualisation.">
-              乗車パターン・需要トレンド・サージ価格行動の分析と予測モデリング。リッチな可視化と需要予測を含むE2Eプロジェクト。</p>
+          <div class="project-card cyber-border anim-item">
+            <div class="p-lang">PYTHON · GEOPANDAS · PCA · FOLIUM · STREAMLIT</div>
+            <h3 data-jp="メルボルン居住性指数" data-en="Melbourne Suburb Liveability Index">メルボルン居住性指数</h3>
+            <p data-jp="グレーター・メルボルンの260郊外を8次元の居住性スコアでランク付け。実際の郊外境界ジオメトリ（GeoPandas, Vicgrid）に、手動ではなくPCAで重みを設定（PC1=分散の42%）。スライダー操作で再スコアするインタラクティブなFolium階級区分図として公開。"
+               data-en="Ranked 260 Greater-Melbourne suburbs on an 8-dimension liveability score — real suburb-boundary geometry (GeoPandas, Vicgrid) with PCA setting the weights (PC1 = 42% of variance) rather than hand-picking them. Shipped as an interactive Folium choropleth that re-scores as you move the sliders.">
+              Ranked 260 Greater-Melbourne suburbs on an 8-dimension liveability score — real suburb-boundary geometry (GeoPandas, Vicgrid) with PCA setting the weights (PC1 = 42% of variance). An interactive Folium choropleth re-scores as you move the sliders.</p>
             <div class="p-meta">
-              <span>14.7 MB</span>
-              <span data-jp="2025年12月" data-en="Dec 2025">2025年12月</span>
+              <span class="p-metric">260 SUBURBS · PCA</span>
+              <div class="p-links">
+                <a href="https://sanny2005-melbourne-liveability.hf.space/" target="_blank" rel="noopener" class="p-link" data-jp="ライブ ↗" data-en="Live ↗">Live ↗</a>
+                <a href="https://github.com/Sanny-Un-Sowadh-Wamik/melbourne-liveability" target="_blank" rel="noopener" class="p-link" data-jp="コード ↗" data-en="Code ↗">Code ↗</a>
+              </div>
             </div>
-          </a>
+          </div>
 
-          <a href="https://github.com/Sanny-Un-Sowadh-Wamik/Depression-Prediction-Project"
-             target="_blank" rel="noopener"
-             class="project-card cyber-border anim-item">
-            <div class="p-lang">PYTHON / JUPYTER</div>
-            <h3 data-jp="うつ病リスク予測" data-en="Depression Risk Prediction">うつ病リスク予測</h3>
-            <p data-jp="健康・ライフスタイルデータからのML分類。Logistic Regression, Random Forest, XGBoostの比較。責任あるAIとヘルスケア分析。"
-               data-en="ML classification from health/lifestyle data. Logistic Regression, Random Forest, XGBoost comparison. Responsible AI &amp; healthcare analytics.">
-              健康・ライフスタイルデータからのML分類。Logistic Regression, Random Forest, XGBoostの比較。責任あるAIとヘルスケア分析。</p>
+          <div class="project-card cyber-border anim-item">
+            <div class="p-lang">NEXT.JS 14 · TYPESCRIPT · APIFY · CLAUDE API</div>
+            <h3 data-jp="Vaultr — AIキャッシュバック" data-en="Vaultr — AI Cashback Engine">Vaultr — AIキャッシュバック</h3>
+            <p data-jp="/api/cashback サービスがApify経由で厳選した5つの豪州ネットワークからライブのオファーを取得し、Claudeで信頼できないソースを除外、ユーザー自身の支出でランク付け。キーが欠けてもフィードが読み込まれる3段階のフォールバック付き。"
+               data-en="An /api/cashback service that pulls live offers from five vetted Australian networks via Apify, runs a Claude pass to drop untrusted sources, and ranks what's left by the user's own spending — with three fallback tiers so the feed always loads.">
+              An /api/cashback service that pulls live offers from five vetted Australian networks via Apify, runs a Claude pass to drop untrusted sources, and ranks what's left by the user's own spending — with three fallback tiers so the feed always loads.</p>
             <div class="p-meta">
-              <span>6.9 MB</span>
-              <span data-jp="2025年4月" data-en="Apr 2025">2025年4月</span>
+              <span class="p-metric">AI CASHBACK ENGINE</span>
+              <div class="p-links">
+                <a href="https://github.com/Sanny-Un-Sowadh-Wamik/thevaultr" target="_blank" rel="noopener" class="p-link" data-jp="コード ↗" data-en="Code ↗">Code ↗</a>
+              </div>
             </div>
-          </a>
+          </div>
 
         </div>
       </div>
@@ -412,6 +436,34 @@
             style="margin-bottom:14px">全作品集</h2>
 
         <div class="projects2-grid">
+
+          <a href="https://github.com/Sanny-Un-Sowadh-Wamik/Click-Collect-Product-Analyst-Case-Study"
+             target="_blank" rel="noopener" class="project-mini cyber-border anim-item">
+            <div class="pm-lang">PYTHON · SQL</div>
+            <h4 data-jp="Click &amp; Collect 行動分析" data-en="Click &amp; Collect Analysis">Click &amp; Collect 行動分析</h4>
+            <p  data-jp="530万ユーザー・1.1億イベントのファネル分析" data-en="Funnel analysis · 110M events, 5.3M users">530万ユーザー・1.1億イベントのファネル分析</p>
+          </a>
+
+          <a href="https://github.com/Sanny-Un-Sowadh-Wamik/RFM-customer-segmentation-analysis"
+             target="_blank" rel="noopener" class="project-mini cyber-border anim-item">
+            <div class="pm-lang">PYTHON</div>
+            <h4 data-jp="RFM顧客セグメンテーション" data-en="RFM Segmentation">RFM顧客セグメンテーション</h4>
+            <p  data-jp="K-Meansで顧客を分類" data-en="K-Means customer segments">K-Meansで顧客を分類</p>
+          </a>
+
+          <a href="https://github.com/Sanny-Un-Sowadh-Wamik/Uber-Ride-Analytics-2024---Data-Science-Project"
+             target="_blank" rel="noopener" class="project-mini cyber-border anim-item">
+            <div class="pm-lang">PYTHON · JUPYTER</div>
+            <h4 data-jp="Uber乗車分析 2024" data-en="Uber Ride Analytics 2024">Uber乗車分析 2024</h4>
+            <p  data-jp="需要トレンド・サージ価格分析" data-en="Demand &amp; surge-pricing analysis">需要トレンド・サージ価格分析</p>
+          </a>
+
+          <a href="https://github.com/Sanny-Un-Sowadh-Wamik/Depression-Prediction-Project"
+             target="_blank" rel="noopener" class="project-mini cyber-border anim-item">
+            <div class="pm-lang">JUPYTER</div>
+            <h4 data-jp="うつ病リスク予測" data-en="Depression Risk Prediction">うつ病リスク予測</h4>
+            <p  data-jp="LogReg・RF・XGBoost比較" data-en="LogReg / RF / XGBoost compare">LogReg・RF・XGBoost比較</p>
+          </a>
 
           <a href="https://github.com/Sanny-Un-Sowadh-Wamik/House-Prices-Prediction"
              target="_blank" rel="noopener" class="project-mini cyber-border anim-item">
@@ -469,6 +521,13 @@
             <p data-jp="Discord音楽ボット" data-en="Discord music bot">Discord音楽ボット</p>
           </a>
 
+          <a href="https://github.com/Sanny-Un-Sowadh-Wamik/Predicting-Public-Transport-Delays-Using-Weather-Events"
+             target="_blank" rel="noopener" class="project-mini cyber-border anim-item">
+            <div class="pm-lang">JUPYTER</div>
+            <h4 data-jp="公共交通の遅延予測" data-en="Transit Delay Prediction">公共交通の遅延予測</h4>
+            <p  data-jp="気象イベントから遅延をML予測" data-en="ML delay prediction from weather">気象イベントから遅延をML予測</p>
+          </a>
+
           <a href="https://sanny-un-sowadh-wamik.github.io"
              target="_blank" rel="noopener" class="project-mini cyber-border anim-item">
             <div class="pm-lang">JAVASCRIPT</div>
@@ -482,9 +541,245 @@
 
 
     <!-- ───────────────────────────────────────
-         SLIDE 5 — CONTACT
+         SLIDE 5 — DATA LAB  (interactive)
+         Three hands-on data science mini-tools:
+           • K-Means clustering   • Linear regression   • Correlation game
+         Powered by js/lab.js
          ─────────────────────────────────────── -->
-    <section class="slide" data-slide="5" aria-label="Contact">
+    <section class="slide" data-slide="5" aria-label="Interactive Data Lab">
+
+      <div class="slide-bg slide-bg--cyber">
+        <canvas class="data-canvas"></canvas>
+      </div>
+
+      <div class="slide-content lab-layout">
+        <div class="section-label anim-item" data-jp="インタラクティブ・ラボ" data-en="INTERACTIVE_LAB">インタラクティブ・ラボ</div>
+        <h2 class="big-title anim-item glow-text"
+            data-jp="データラボ" data-en="DATA LAB"
+            style="margin-bottom:6px">データラボ</h2>
+        <p class="lab-intro anim-item"
+           data-jp="本物のデータサイエンスで遊ぼう。3つのインタラクティブなアルゴリズムと、5つのライブで動くデータ可視化 — クリック・ドラッグ・実行して、数字が動く様子を体験できます。"
+           data-en="Play with real data science — 3 interactive algorithms plus 5 live, animated visualisations. Click, drag, run, and hover to watch the data come alive.">
+          Play with real data science — 3 interactive algorithms plus 5 live, animated visualisations. Click, drag, run, and hover to watch the data come alive.
+        </p>
+
+        <!-- Tabs -->
+        <div class="lab-tabs anim-item" role="tablist">
+          <button class="lab-tab active" data-lab="kmeans"      data-jp="クラスタリング" data-en="K-MEANS">K-MEANS</button>
+          <button class="lab-tab"        data-lab="regression"  data-jp="線形回帰"       data-en="REGRESSION">REGRESSION</button>
+          <button class="lab-tab"        data-lab="correlation" data-jp="相関ゲーム"     data-en="CORRELATION">CORRELATION</button>
+          <button class="lab-tab"        data-lab="heatmap"     data-jp="ヒートマップ"   data-en="HEAT MAP">HEAT MAP</button>
+          <button class="lab-tab"        data-lab="network"     data-jp="ネットワーク"   data-en="NETWORK">NETWORK</button>
+          <button class="lab-tab"        data-lab="beeswarm"    data-jp="ビースウォーム" data-en="BEESWARM">BEESWARM</button>
+          <button class="lab-tab"        data-lab="violin"      data-jp="バイオリン"     data-en="VIOLIN">VIOLIN</button>
+          <button class="lab-tab"        data-lab="treemap"     data-jp="ツリーマップ"   data-en="TREEMAP">TREEMAP</button>
+        </div>
+
+        <!-- Stage holds all three panels (only the active one displays) -->
+        <div class="lab-stage anim-item">
+
+          <!-- ── K-MEANS ── -->
+          <div class="lab-panel active" data-lab="kmeans">
+            <div class="lab-canvas-wrap cyber-border">
+              <canvas id="labKmeansCanvas"></canvas>
+              <div class="lab-hint" data-jp="クリックで点を追加" data-en="Click to add points">Click to add points</div>
+            </div>
+            <div class="lab-controls">
+              <div class="lab-ctrl-title" data-jp="K平均法クラスタリング" data-en="K-MEANS CLUSTERING">K-MEANS CLUSTERING</div>
+              <p class="lab-ctrl-desc"
+                 data-jp="データ点をK個のクラスタに分割します。私のRFM顧客セグメンテーション分析と同じ手法です。"
+                 data-en="Group points into K clusters — the same technique behind my RFM customer-segmentation project.">
+                Group points into K clusters — the same technique behind my RFM customer-segmentation project.
+              </p>
+              <div class="lab-slider-row">
+                <label data-jp="クラスタ数 K" data-en="CLUSTERS · K">CLUSTERS · K</label>
+                <input type="range" min="2" max="5" value="3" step="1" class="lab-range" id="labK" aria-label="Number of clusters">
+                <span class="lab-kval" id="labKVal">3</span>
+              </div>
+              <div class="lab-status" id="labKmeansStatus">// READY</div>
+              <div class="lab-btn-row">
+                <button class="lab-btn" id="labKmeansGen"               data-jp="データ生成" data-en="GENERATE">GENERATE</button>
+                <button class="lab-btn lab-btn-primary" id="labKmeansRun" data-jp="実行 ▶"    data-en="RUN ▶">RUN ▶</button>
+                <button class="lab-btn" id="labKmeansClear"             data-jp="クリア"     data-en="CLEAR">CLEAR</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── LINEAR REGRESSION ── -->
+          <div class="lab-panel" data-lab="regression">
+            <div class="lab-canvas-wrap cyber-border">
+              <canvas id="labRegCanvas"></canvas>
+              <div class="lab-hint" data-jp="クリックで点を追加" data-en="Click to add points">Click to add points</div>
+            </div>
+            <div class="lab-controls">
+              <div class="lab-ctrl-title" data-jp="線形回帰" data-en="LINEAR REGRESSION">LINEAR REGRESSION</div>
+              <p class="lab-ctrl-desc"
+                 data-jp="点を追加すると最小二乗法で回帰直線がリアルタイムに当てはまります。住宅価格予測モデルと同じ回帰です。"
+                 data-en="Drop points and watch a least-squares line fit in real time — regression like my House Prices model.">
+                Drop points and watch a least-squares line fit in real time — regression like my House Prices model.
+              </p>
+              <div class="lab-readout">
+                <div class="lab-readout-row"><span>EQUATION</span><b id="labRegEq">y = —</b></div>
+                <div class="lab-readout-row"><span>R²</span><b id="labRegR2">—</b></div>
+                <div class="lab-readout-row"><span data-jp="点の数" data-en="POINTS">POINTS</span><b id="labRegN">0</b></div>
+              </div>
+              <div class="lab-btn-row">
+                <button class="lab-btn" id="labRegSeed"  data-jp="サンプル" data-en="SAMPLE">SAMPLE</button>
+                <button class="lab-btn" id="labRegClear" data-jp="クリア"   data-en="CLEAR">CLEAR</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── CORRELATION GAME ── -->
+          <div class="lab-panel" data-lab="correlation">
+            <div class="lab-canvas-wrap cyber-border">
+              <canvas id="labCorrCanvas"></canvas>
+              <div class="lab-hint" id="labCorrReveal"></div>
+            </div>
+            <div class="lab-controls">
+              <div class="lab-ctrl-title" data-jp="相関を当てよう" data-en="GUESS THE CORRELATION">GUESS THE CORRELATION</div>
+              <p class="lab-ctrl-desc"
+                 data-jp="散布図の関係はどのくらい強い？ スライダーで相関係数 r を推測して、答え合わせをしよう。"
+                 data-en="How strong is the relationship? Slide to guess the correlation r, then reveal the truth.">
+                How strong is the relationship? Slide to guess the correlation r, then reveal the truth.
+              </p>
+              <div class="lab-slider-row">
+                <label>r</label>
+                <input type="range" min="-100" max="100" value="0" step="1" class="lab-range" id="labCorrGuess" aria-label="Guess the correlation">
+                <span class="lab-kval" id="labCorrGuessVal">0.00</span>
+              </div>
+              <div class="lab-status" id="labCorrResult">// GUESS r THEN SUBMIT</div>
+              <div class="lab-scorebar">
+                <span data-jp="スコア" data-en="SCORE">SCORE</span><b id="labCorrScore">0</b>
+                <span data-jp="ラウンド" data-en="ROUND">ROUND</span><b id="labCorrRound">1</b>
+              </div>
+              <div class="lab-btn-row">
+                <button class="lab-btn lab-btn-primary" id="labCorrSubmit" data-jp="回答する" data-en="SUBMIT">SUBMIT</button>
+                <button class="lab-btn" id="labCorrNew"                   data-jp="次の問題" data-en="NEW ROUND">NEW ROUND</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── GEOGRAPHIC HEAT MAP ── -->
+          <div class="lab-panel" data-lab="heatmap">
+            <div class="lab-canvas-wrap cyber-border">
+              <canvas id="labHeatCanvas"></canvas>
+              <div class="lab-hint" data-jp="マップにマウスを重ねてみよう" data-en="Hover the map">Hover the map</div>
+            </div>
+            <div class="lab-controls">
+              <div class="lab-ctrl-title" data-jp="地理ヒートマップ" data-en="GEOGRAPHIC HEAT MAP">GEOGRAPHIC HEAT MAP</div>
+              <p class="lab-ctrl-desc"
+                 data-jp="観測点から逆距離加重（IDW）で連続的な熱フィールドを補間 — メルボルン居住性プロジェクトと同じ地理空間の考え方です。"
+                 data-en="Inverse-distance-weighted (IDW) interpolation turns scattered stations into a smooth heat field — the geospatial idea behind my Melbourne Liveability project.">
+                Inverse-distance-weighted interpolation turns scattered stations into a smooth heat field — like my Melbourne Liveability project.
+              </p>
+              <div class="lab-status" id="labHeatInfo">// HOVER FOR VALUE</div>
+              <div class="lab-btn-row">
+                <button class="lab-btn lab-btn-primary" id="labHeatNew" data-jp="再生成" data-en="RESHUFFLE">RESHUFFLE</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── FORCE-DIRECTED NETWORK ── -->
+          <div class="lab-panel" data-lab="network">
+            <div class="lab-canvas-wrap cyber-border">
+              <canvas id="labNetCanvas"></canvas>
+              <div class="lab-hint" data-jp="ノードをドラッグ" data-en="Drag the nodes">Drag the nodes</div>
+            </div>
+            <div class="lab-controls">
+              <div class="lab-ctrl-title" data-jp="力学的ネットワーク図" data-en="FORCE-DIRECTED NETWORK">FORCE-DIRECTED NETWORK</div>
+              <p class="lab-ctrl-desc"
+                 data-jp="バネ（引力）と反発（斥力）の物理シミュレーションでグラフが自己組織化。ノードをドラッグして弾ませてみよう。"
+                 data-en="A spring-and-repulsion physics simulation lets the graph lay itself out. Grab a node and fling it — the network springs back.">
+                A spring + repulsion physics sim lets the graph lay itself out. Grab a node and fling it.
+              </p>
+              <div class="lab-status" id="labNetInfo">// NODES 0 · EDGES 0</div>
+              <div class="lab-btn-row">
+                <button class="lab-btn lab-btn-primary" id="labNetAdd" data-jp="ノード追加" data-en="ADD NODE">ADD NODE</button>
+                <button class="lab-btn" id="labNetShake" data-jp="シェイク" data-en="SHAKE">SHAKE</button>
+                <button class="lab-btn" id="labNetReset" data-jp="リセット" data-en="RESET">RESET</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── BEESWARM PLOT ── -->
+          <div class="lab-panel" data-lab="beeswarm">
+            <div class="lab-canvas-wrap cyber-border">
+              <canvas id="labBeeCanvas"></canvas>
+              <div class="lab-hint" data-jp="点にマウスを重ねてみよう" data-en="Hover a point">Hover a point</div>
+            </div>
+            <div class="lab-controls">
+              <div class="lab-ctrl-title" data-jp="ビースウォーム・プロット" data-en="BEESWARM PLOT">BEESWARM PLOT</div>
+              <p class="lab-ctrl-desc"
+                 data-jp="一次元の分布を、点を重ねずに表示。衝突回避のパッキングで各点が居場所を見つけて整列します。"
+                 data-en="Shows a 1-D distribution without overlapping points — a collision-avoidance packing nudges each point until every value finds its place.">
+                Shows a 1-D distribution without hiding points — collision-avoidance packing nudges each value into place.
+              </p>
+              <div class="lab-status" id="labBeeInfo">// 3 GROUPS</div>
+              <div class="lab-btn-row">
+                <button class="lab-btn lab-btn-primary" id="labBeeNew" data-jp="再サンプリング" data-en="RESHUFFLE">RESHUFFLE</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── VIOLIN PLOT ── -->
+          <div class="lab-panel" data-lab="violin">
+            <div class="lab-canvas-wrap cyber-border">
+              <canvas id="labViolinCanvas"></canvas>
+              <div class="lab-hint" data-jp="分布の形に注目" data-en="Distribution shapes">Distribution shapes</div>
+            </div>
+            <div class="lab-controls">
+              <div class="lab-ctrl-title" data-jp="バイオリン・プロット" data-en="VIOLIN PLOT">VIOLIN PLOT</div>
+              <p class="lab-ctrl-desc"
+                 data-jp="カーネル密度推定（KDE）で各グループの分布の形を描画。箱ひげ図より「形」が見えるプロットです。"
+                 data-en="Kernel-density estimation (KDE) draws the shape of each group's distribution — it shows the curve a box-plot hides.">
+                Kernel-density estimation draws each group's distribution shape — the curve a box-plot hides.
+              </p>
+              <div class="lab-status" id="labViolinInfo">// 4 DISTRIBUTIONS</div>
+              <div class="lab-btn-row">
+                <button class="lab-btn lab-btn-primary" id="labViolinNew" data-jp="新しいサンプル" data-en="NEW SAMPLE">NEW SAMPLE</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── VORONOI / CONVEX TREEMAP ── -->
+          <div class="lab-panel" data-lab="treemap">
+            <div class="lab-canvas-wrap cyber-border">
+              <canvas id="labTreeCanvas"></canvas>
+              <div class="lab-hint" data-jp="セルにマウスを重ねてみよう" data-en="Hover a cell">Hover a cell</div>
+            </div>
+            <div class="lab-controls">
+              <div class="lab-ctrl-title" data-jp="コンベックス・ツリーマップ" data-en="CONVEX TREEMAP">CONVEX TREEMAP</div>
+              <p class="lab-ctrl-desc"
+                 data-jp="ボロノイ分割で面積＝値の凸セルを生成し、ロイド緩和で滑らかに形が整う様子をアニメーション表示します。"
+                 data-en="A Voronoi tessellation builds convex cells whose area encodes value, animated with Lloyd relaxation so the layout settles smoothly.">
+                A Voronoi tessellation builds convex cells whose area encodes value, animated with Lloyd relaxation.
+              </p>
+              <div class="lab-status" id="labTreeInfo">// HOVER A CELL</div>
+              <div class="lab-btn-row">
+                <button class="lab-btn lab-btn-primary" id="labTreeNew" data-jp="再生成" data-en="REGENERATE">REGENERATE</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Explicit slide navigation. Wheel/swipe paging is disabled on the Lab
+             so it never interrupts clicking/dragging — these buttons (and the
+             side arrows / dots) are the clear way to move to other pages. -->
+        <nav class="lab-nav anim-item" aria-label="Leave the Data Lab">
+          <button class="lab-nav-btn" onclick="prevSlide()" data-jp="← 全作品" data-en="← ALL WORKS">← ALL WORKS</button>
+          <span class="lab-nav-note" data-jp="ページ切替" data-en="SWITCH PAGES">SWITCH PAGES</span>
+          <button class="lab-nav-btn" onclick="nextSlide()" data-jp="連絡先 →" data-en="CONTACT →">CONTACT →</button>
+        </nav>
+      </div>
+    </section><!-- /SLIDE 5 (DATA LAB) -->
+
+
+    <!-- ───────────────────────────────────────
+         SLIDE 6 — CONTACT
+         ─────────────────────────────────────── -->
+    <section class="slide" data-slide="6" aria-label="Contact">
 
       <div class="slide-bg slide-bg--cyber">
         <canvas class="data-canvas"></canvas>
@@ -516,15 +811,20 @@
             <div class="contact-info-row">
               <span class="contact-info-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></span>
               <span class="contact-info-label" data-jp="学位" data-en="DEGREE">学位</span>
-              <span class="contact-info-value" data-jp="データサイエンス学士" data-en="B. Data Science">データサイエンス学士</span>
+              <span class="contact-info-value" data-jp="データサイエンス学士（2027年見込）" data-en="B. Data Science (Expected 2027)">データサイエンス学士（2027年見込）</span>
             </div>
             <div class="contact-info-row">
               <span class="contact-info-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
               <span class="contact-info-label" data-jp="専門" data-en="FOCUS">専門</span>
-              <span class="contact-info-value">ML · Python · Data Science</span>
+              <span class="contact-info-value">ML · MLOps · Data Science</span>
             </div>
           </div>
           <div class="contact-cta-btns">
+            <a href="mailto:sannyunsowadh01@gmail.com" class="contact-email-btn anim-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+              <span data-jp="メールを送る" data-en="Email Me">メールを送る</span>
+              <span class="contact-arrow">&#8594;</span>
+            </a>
             <a href="https://github.com/Sanny-Un-Sowadh-Wamik" target="_blank" rel="noopener" class="contact-github-btn anim-item">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
               <span data-jp="GitHubで見る" data-en="View on GitHub">GitHubで見る</span>
@@ -548,31 +848,33 @@
           </div>
           <div class="contact-stat-row anim-item">
             <div class="contact-stat-pill cyber-border">
-              <span class="csn">16</span>
+              <span class="csn" data-countup>21</span>
               <span class="csl" data-jp="リポジトリ" data-en="Repos">リポジトリ</span>
             </div>
             <div class="contact-stat-pill cyber-border">
-              <span class="csn">7+</span>
+              <span class="csn" data-countup>10+</span>
               <span class="csl" data-jp="MLモデル" data-en="ML Models">MLモデル</span>
             </div>
             <div class="contact-stat-pill cyber-border">
-              <span class="csn">15</span>
+              <span class="csn" data-countup>18</span>
               <span class="csl" data-jp="公開PJ" data-en="Projects">公開PJ</span>
             </div>
           </div>
           <div class="contact-stack anim-item">
             <div class="contact-stack-label" data-jp="技術スタック" data-en="TECH STACK">技術スタック</div>
             <div class="contact-stack-tags">
-              <span class="cstag">Python</span><span class="cstag">scikit-learn</span>
-              <span class="cstag">pandas</span><span class="cstag">XGBoost</span>
-              <span class="cstag">SQL</span><span class="cstag">R</span>
-              <span class="cstag">Jupyter</span><span class="cstag">TypeScript</span>
+              <span class="cstag">Python</span><span class="cstag">SQL</span>
+              <span class="cstag">XGBoost</span><span class="cstag">LightGBM</span>
+              <span class="cstag">scikit-learn</span><span class="cstag">MLflow</span>
+              <span class="cstag">FastAPI</span><span class="cstag">Docker</span>
+              <span class="cstag">SHAP</span><span class="cstag">GeoPandas</span>
+              <span class="cstag">Spark</span><span class="cstag">Power BI</span>
             </div>
           </div>
           <p class="contact-footer anim-item"
-             data-jp="RMIT大学 // メルボルン // 2026"
-             data-en="RMIT UNIVERSITY // MELBOURNE // 2026">
-            RMIT大学 // メルボルン // 2026
+             data-jp="RMIT大学 // メルボルン // 2027年卒業見込"
+             data-en="RMIT UNIVERSITY // MELBOURNE // CLASS OF 2027">
+            RMIT大学 // メルボルン // 2027年卒業見込
           </p>
         </div>
 
@@ -591,6 +893,7 @@
        ══════════════════════════════════════════ -->
   <script src="js/main.js"></script>
   <script src="js/canvas.js"></script>
+  <script src="js/lab.js"></script>
 
 </body>
 </html>

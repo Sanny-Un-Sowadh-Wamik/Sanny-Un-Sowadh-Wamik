@@ -510,7 +510,7 @@ a {
   border: 1.5px solid var(--cyan-dim);
   background: transparent;
   cursor: pointer;
-  transition: all 0.4s;
+  transition: all 0.2s;
   position: relative;
   /* Hexagon shape */
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
@@ -793,7 +793,7 @@ a {
   font-size: clamp(10px, 1.2vw, 13px);
   letter-spacing: 2px;
   cursor: pointer;
-  transition: all 0.4s;
+  transition: all 0.2s;
   background: rgba(204, 0, 0, 0.06);
   text-transform: uppercase;
   backdrop-filter: blur(4px);
@@ -829,7 +829,7 @@ a {
 .stat-card {
   padding: clamp(12px, 2vw, 20px);
   text-align: center;
-  transition: all 0.4s;
+  transition: all 0.2s;
 }
 
 .stat-card:hover {
@@ -894,7 +894,7 @@ a {
 
 .skill-card {
   padding: clamp(12px, 2vw, 18px);
-  transition: all 0.4s;
+  transition: all 0.2s;
   position: relative;
   overflow: hidden;
 }
@@ -976,7 +976,7 @@ a {
 
 .project-card {
   padding: clamp(14px, 2vw, 22px);
-  transition: all 0.4s;
+  transition: all 0.2s;
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -1175,7 +1175,7 @@ a {
   letter-spacing: 2px;
   text-transform: uppercase;
   background: rgba(204, 0, 0, 0.05);
-  transition: all 0.4s;
+  transition: all 0.2s;
   backdrop-filter: blur(4px);
   cursor: pointer;
 }
@@ -1199,7 +1199,7 @@ a {
   letter-spacing: 2px;
   text-transform: uppercase;
   background: rgba(0, 240, 255, 0.04);
-  transition: all 0.4s;
+  transition: all 0.2s;
   backdrop-filter: blur(4px);
   cursor: pointer;
 }
@@ -1375,6 +1375,386 @@ a {
 }
 
 
+/* ─────────────────────────────────────────────
+   22b. DATA LAB SLIDE (interactive mini-tools)
+   ───────────────────────────────────────────── */
+.lab-layout {
+  max-width: 1150px;
+  width: 100%;
+}
+
+.lab-intro {
+  font-size: clamp(12px, 1.3vw, 15px);
+  line-height: 1.7;
+  color: var(--text-dim);
+  margin-top: 6px;
+  max-width: 760px;
+  font-family: var(--font-body);
+}
+
+/* ── Tab row ── */
+.lab-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 12px;
+}
+
+.lab-tab {
+  padding: 7px 16px;
+  font-family: var(--font-mono);
+  font-size: clamp(9px, 1.1vw, 12px);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: rgba(0, 240, 255, 0.04);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  cursor: pointer;
+  transition: all 0.3s;
+  /* Clipped corner for a circuit-board feel */
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+}
+
+.lab-tab:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.lab-tab.active {
+  background: var(--neon-green);
+  border-color: var(--neon-green);
+  color: #000;
+  box-shadow: 0 0 16px var(--neon-green-dim);
+}
+
+/* ── Panels: one visible at a time ── */
+.lab-panel { display: none; }
+
+.lab-panel.active {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 14px;
+  align-items: stretch;
+}
+
+/* Let grid tracks shrink to their container — without this the <canvas>'s
+   intrinsic 300px width stretches the track and overflows under the arrows. */
+.lab-panel > * { min-width: 0; }
+
+/* ── Canvas frame ── */
+.lab-canvas-wrap {
+  position: relative;
+  height: clamp(210px, 36vh, 330px);
+  overflow: hidden;
+}
+
+.lab-canvas-wrap canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: crosshair;
+}
+
+/* Small floating caption on the canvas (e.g. "Click to add points") */
+.lab-hint {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--cyan);
+  background: rgba(0, 0, 0, 0.45);
+  padding: 3px 8px;
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  pointer-events: none;
+  backdrop-filter: blur(2px);
+}
+
+.lab-hint:empty { display: none; }   /* Hide the reveal box until populated */
+
+/* ── Control column ── */
+.lab-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 2px;
+}
+
+.lab-ctrl-title {
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 1.3vw, 14px);
+  letter-spacing: 2px;
+  color: var(--neon-green);
+  text-shadow: 0 0 8px var(--neon-green-dim);
+}
+
+.lab-ctrl-desc {
+  font-size: clamp(11px, 1.15vw, 13px);
+  color: var(--text-dim);
+  line-height: 1.55;
+}
+
+/* Slider row (K selector, correlation guess) */
+.lab-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lab-slider-row label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--cyan);
+  white-space: nowrap;
+}
+
+.lab-range {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 3px;
+  background: rgba(0, 240, 255, 0.18);
+  border-radius: 2px;
+  outline: none;
+}
+
+.lab-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan-dim);
+  cursor: pointer;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.lab-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: none;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan-dim);
+  cursor: pointer;
+}
+
+.lab-kval {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--neon-green);
+  min-width: 46px;
+  text-align: right;
+}
+
+/* Status / readout strips */
+.lab-status {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--cyan);
+  padding: 7px 10px;
+  background: rgba(0, 0, 0, 0.35);
+  border-left: 2px solid var(--cyan);
+}
+
+.lab-readout {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 240, 255, 0.1);
+}
+
+.lab-readout-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.lab-readout-row span {
+  color: var(--text-dim);
+  letter-spacing: 2px;
+}
+
+.lab-readout-row b {
+  color: var(--cyan);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* Correlation game score line */
+.lab-scorebar {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+}
+
+.lab-scorebar b {
+  color: var(--neon-green);
+  font-family: var(--font-display);
+  font-size: 16px;
+  margin-right: 10px;
+  text-shadow: 0 0 8px var(--neon-green-dim);
+}
+
+/* Buttons */
+.lab-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.lab-btn {
+  flex: 1;
+  min-width: 84px;
+  padding: 9px 12px;
+  font-family: var(--font-mono);
+  font-size: clamp(9px, 1.05vw, 11px);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  background: rgba(0, 240, 255, 0.05);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.lab-btn:hover {
+  background: rgba(0, 240, 255, 0.14);
+  border-color: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan-dim);
+}
+
+.lab-btn-primary {
+  color: var(--neon-green);
+  background: rgba(204, 0, 0, 0.08);
+  border-color: var(--neon-green);
+}
+
+.lab-btn-primary:hover {
+  background: var(--neon-green);
+  color: #000;
+  box-shadow: 0 0 16px rgba(204, 0, 0, 0.45);
+}
+
+/* Skill-bar percentage label (Skills slide) */
+.skill-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.skill-bar-row .skill-bar {
+  flex: 1;
+  margin-top: 0;
+}
+
+.skill-pct {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--cyan);
+  min-width: 38px;
+  text-align: right;
+  text-shadow: 0 0 6px var(--cyan-dim);
+}
+
+/* ── Data Lab as a self-contained interactive zone ──
+   When the lab slide is active (body.lab-active, toggled by main.js):
+     • Wheel / swipe slide-navigation is suppressed (in main.js) so clicking the
+       chart or dragging a slider never flips the slide.
+     • The edge arrows STAY visible (they're the obvious way out), but the lab
+       content is inset (padding-inline) so the chart sits BETWEEN the arrows
+       rather than under them — taps near the chart add points, arrows still work.
+     • The lab may scroll internally so controls are never clipped on short screens. */
+
+/* Keep the interactive content clear of the fixed edge-arrows at every width */
+.lab-layout { padding-inline: clamp(48px, 7vw, 64px); }
+
+body.lab-active .lab-layout {
+  max-height: calc(100vh - 76px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cyan-dim) transparent;
+}
+
+body.lab-active .lab-layout::-webkit-scrollbar { width: 6px; }
+body.lab-active .lab-layout::-webkit-scrollbar-thumb {
+  background: var(--cyan-dim);
+  border-radius: 3px;
+}
+
+/* On the Lab, make the arrows pop so it's obvious how to leave the slide */
+body.lab-active .arrow-btn {
+  background: rgba(0, 240, 255, 0.12);
+  border-color: var(--cyan);
+  box-shadow: 0 0 14px var(--cyan-dim);
+}
+
+/* Canvas owns its gestures (click/drag/hover) — no scroll/zoom hijack */
+.lab-canvas-wrap canvas { touch-action: none; }
+
+/* Crisp taps on the interactive controls (no 300ms / double-tap-zoom delay) */
+.lab-tab,
+.lab-btn,
+.lab-nav-btn,
+.lab-range { touch-action: manipulation; }
+
+/* Explicit prev/next navigation inside the Lab (clear way to leave the slide) */
+.lab-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.lab-nav-note {
+  font-family: var(--font-mono);
+  font-size: clamp(8px, 1vw, 10px);
+  letter-spacing: 3px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.lab-nav-btn {
+  padding: 10px 20px;
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 1.2vw, 13px);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--neon-green);
+  background: rgba(204, 0, 0, 0.08);
+  border: 1px solid var(--neon-green);
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.lab-nav-btn:hover {
+  background: var(--neon-green);
+  color: #000;
+  box-shadow: 0 0 18px rgba(204, 0, 0, 0.5);
+}
+
+@media (max-width: 480px) {
+  .lab-nav-note { display: none; }   /* Keep the two buttons roomy on small screens */
+}
+
 
 /* ─────────────────────────────────────────────
    23. RESPONSIVE BREAKPOINTS
@@ -1383,10 +1763,16 @@ a {
 /* Tablet portrait */
 @media (max-width: 768px) {
   .about-layout { grid-template-columns: 1fr; }
-  .nav-dots { right: 8px; gap: 10px; }
+  .nav-dots { right: 10px; gap: 16px; }
+  .nav-dot { width: 11px; height: 11px; }       /* Bigger tap target (primary nav on the Lab) */
+  .nav-dot.active { width: 13px; height: 13px; }
   .nav-dot-label { display: none; }  /* Labels too cramped on mobile */
   .arrow-btn.right { right: clamp(24px, 3vw, 50px); }
   .hero-kanji { font-size: clamp(45px, 18vw, 110px); }
+
+  /* Data Lab: stack canvas above its controls */
+  .lab-panel.active { grid-template-columns: 1fr; gap: 10px; }
+  .lab-canvas-wrap  { height: clamp(180px, 30vh, 250px); }
 }
 
 /* Mobile portrait */
@@ -1472,4 +1858,162 @@ a {
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.3; }
+}
+
+
+/* ─────────────────────────────────────────────
+   25. MODERN POLISH & HOVER ANIMATIONS
+   ───────────────────────────────────────────── */
+
+/* Standout project metric chip (Featured cards) */
+.p-metric {
+  color: var(--cyan) !important;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px var(--cyan-dim);
+}
+
+/* Featured cards: animate the "Live · API · Code →" hint on hover */
+.project-card .p-meta span:last-child {
+  transition: transform 0.3s, color 0.3s;
+}
+.project-card:hover .p-meta span:last-child {
+  color: var(--neon-green);
+  transform: translateX(4px);
+}
+
+/* Email CTA — third contact button (magenta accent to sit between red & cyan) */
+.contact-email-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border: 1px solid #ff3b6b;
+  color: #ff7da1;
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 1.2vw, 13px);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: rgba(255, 59, 107, 0.06);
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+.contact-email-btn:hover {
+  background: #ff3b6b;
+  color: #000;
+  box-shadow: 0 0 25px rgba(255, 59, 107, 0.45);
+}
+.contact-email-btn:hover .contact-arrow { transform: translateX(5px); }
+
+/* Flowing gradient on the hero name */
+.hero-name {
+  background-size: 220% auto;
+  animation: nameFlow 9s ease-in-out infinite;
+}
+@keyframes nameFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* Hero tags — lift + glow on hover, with a quick pop */
+.hero-tag {
+  transition: transform 0.16s ease-out, color 0.16s, border-color 0.16s, box-shadow 0.16s, background 0.16s;
+  will-change: transform;
+}
+.hero-tag:hover {
+  transform: translateY(-3px) scale(1.06);
+  color: #fff;
+  border-color: var(--cyan);
+  background: rgba(0, 240, 255, 0.12);
+  box-shadow: 0 6px 18px rgba(0, 240, 255, 0.18);
+}
+
+/* Featured project cards — snappy lift on hover (cards are now containers,
+   the Live/API/Code chips are the real links) */
+.project-card {
+  cursor: default;
+  transition: transform 0.18s ease-out, border-color 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.project-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--cyan);
+  box-shadow: 0 14px 40px rgba(0, 240, 255, 0.12), inset 0 0 30px rgba(0, 240, 255, 0.03);
+}
+
+/* Featured card meta → metric line above a row of Live / API / Code chips */
+.project-card .p-meta { flex-direction: column; align-items: flex-start; gap: 9px; }
+.p-links { display: flex; flex-wrap: wrap; gap: 6px; }
+.p-link {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  color: var(--cyan);
+  background: rgba(0, 240, 255, 0.06);
+  white-space: nowrap;
+  transition: transform 0.15s ease-out, background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+.p-link:hover {
+  background: var(--cyan);
+  color: #000;
+  box-shadow: 0 0 12px var(--cyan-dim);
+  transform: translateY(-2px);
+}
+
+/* Mini project cards — lift + scale + accent sweep of the bottom accent line */
+.project-mini {
+  transition: transform 0.16s ease-out, border-color 0.16s, box-shadow 0.16s, background 0.16s;
+}
+.project-mini:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: var(--cyan);
+  box-shadow: 0 10px 26px rgba(0, 240, 255, 0.12);
+}
+.project-mini h4 { transition: color 0.3s; }
+.project-mini:hover h4 { color: var(--cyan); }
+
+/* Skill cards — lift; the bar fill brightens and the % pops */
+.skill-card { transition: transform 0.18s ease-out, border-color 0.18s, background 0.18s, box-shadow 0.18s; }
+.skill-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(0, 240, 255, 0.10);
+}
+.skill-card:hover .skill-bar-fill { box-shadow: 0 0 12px var(--cyan); }
+.skill-pct { transition: transform 0.3s, color 0.3s; }
+.skill-card:hover .skill-pct { transform: scale(1.25); color: #fff; }
+
+/* Stat cards / pills — springy scale + number glow */
+.stat-card, .contact-stat-pill {
+  transition: transform 0.18s ease-out, border-color 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.stat-card:hover, .contact-stat-pill:hover {
+  transform: translateY(-3px) scale(1.04);
+}
+.stat-card:hover .stat-value, .contact-stat-pill:hover .csn {
+  text-shadow: 0 0 18px var(--neon-green);
+}
+
+/* Tech-stack tags — lift + cyan pop */
+.cstag {
+  transition: transform 0.15s ease-out, background 0.15s, border-color 0.15s, color 0.15s;
+}
+.cstag:hover { transform: translateY(-2px) scale(1.07); color: #fff; }
+
+/* Lab tabs — subtle lift on hover */
+.lab-tab { transition: transform 0.25s, color 0.3s, background 0.3s, border-color 0.3s, box-shadow 0.3s; }
+.lab-tab:hover { transform: translateY(-2px); }
+
+/* Nav dots — springy hover */
+.nav-dot { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.4s, border-color 0.4s, box-shadow 0.4s; }
+
+/* Contact info rows — slide-in accent on hover */
+.contact-info-row { transition: border-color 0.3s, transform 0.3s, background 0.3s; }
+.contact-info-row:hover { transform: translateX(4px); background: rgba(0, 240, 255, 0.04); }
+
+/* Respect reduced-motion: drop the continuous gradient flow */
+@media (prefers-reduced-motion: reduce) {
+  .hero-name { animation: none; }
 }

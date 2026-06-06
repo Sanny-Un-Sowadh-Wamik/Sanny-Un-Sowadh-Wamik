@@ -23,7 +23,10 @@
    ───────────────────────────────────────────────── */
 
 /** Total number of slides */
-const TOTAL_SLIDES = 6;
+const TOTAL_SLIDES = 7;
+
+/** Index of the interactive Data Lab slide (special: scroll/swipe nav disabled) */
+const LAB_SLIDE = 5;
 
 /** Currently active slide index */
 let currentSlide = 0;
@@ -36,8 +39,8 @@ let currentLang = 'jp';
 
 /** Nav-dot tooltip labels per language */
 const DOT_LABELS = {
-  jp: ['ホーム', '自己紹介', 'スキル', '主要作品', '全作品', '連絡先'],
-  en: ['Home',   'About',    'Skills', 'Featured',  'All Works', 'Contact'],
+  jp: ['ホーム', '自己紹介', 'スキル', '主要作品', '全作品', 'データラボ', '連絡先'],
+  en: ['Home',   'About',    'Skills', 'Featured',  'All Works', 'Data Lab', 'Contact'],
 };
 
 /** Video sources for home-page background  */
@@ -256,6 +259,53 @@ function activateSlideItems(slide) {
     void bar.offsetWidth;
     bar.style.width = bar.getAttribute('data-w') || '0';
   });
+
+  // Animate any count-up numbers (stats, skill percentages)
+  runCountUps(slide);
+
+  // Let the interactive Data Lab know which slide is now on screen
+  // (it resizes / pauses its canvases accordingly)
+  if (window.DataLab) window.DataLab.onSlideShown(slide);
+}
+
+/**
+ * Animate every [data-countup] element inside a slide from 0 to its target.
+ * Target is taken from data-cu-target (+ optional data-cu-suffix) if present,
+ * otherwise parsed from the element's text (e.g. "16", "7+", "95%").
+ * @param {Element} slide
+ */
+function runCountUps(slide) {
+  slide.querySelectorAll('[data-countup]').forEach(el => {
+    let target, suffix;
+
+    if (el.dataset.cuTarget !== undefined) {
+      target = parseFloat(el.dataset.cuTarget) || 0;
+      suffix = el.dataset.cuSuffix || '';
+    } else {
+      const m = String(el.textContent).trim().match(/^(\d+(?:\.\d+)?)(.*)$/);
+      target = m ? parseFloat(m[1]) : 0;
+      suffix = m ? m[2] : '';
+      el.dataset.cuTarget = String(target);   // Cache so re-runs stay stable
+      el.dataset.cuSuffix = suffix;
+    }
+
+    const isInt = Number.isInteger(target);
+    const dur   = 1200;
+    const t0    = performance.now();
+    // Token guards against overlapping animations on rapid re-entry
+    const token = (el._cuToken = (el._cuToken || 0) + 1);
+
+    function tick(now) {
+      if (el._cuToken !== token) return;            // Superseded by a newer run
+      const p     = Math.min((now - t0) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);          // easeOutCubic
+      const val   = target * eased;
+      el.textContent = (isInt ? Math.round(val) : val.toFixed(2)) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = (isInt ? target : target.toFixed(2)) + suffix;
+    }
+    requestAnimationFrame(tick);
+  });
 }
 
 /**
@@ -315,6 +365,11 @@ function goToSlide(n) {
     currentSlide = n;
     updateNavDots();
 
+    // The Data Lab is an interactive zone: flag it on <body> so the CSS can hide
+    // the edge nav-arrows (they overlap the canvas) and so wheel/swipe slide
+    // navigation is suppressed while the user is clicking/dragging inside it.
+    document.body.classList.toggle('lab-active', n === LAB_SLIDE);
+
     // Clean up entry animation class
     setTimeout(() => {
       inSlide.classList.remove('enter-right', 'enter-left');
@@ -355,28 +410,50 @@ document.addEventListener('touchstart', e => {
 }, { passive: true });
 
 document.addEventListener('touchend', e => {
+  // On the interactive Data Lab, let taps/drags reach the canvas & controls
+  // instead of swiping to another slide. Leave via nav dots or arrow keys.
+  if (document.body.classList.contains('lab-active')) return;
+  if (isTransitioning) return;   // ignore swipes mid-transition (no skipping)
+
   const dx = e.changedTouches[0].clientX - touchStartX;
   const dy = e.changedTouches[0].clientY - touchStartY;
 
+  // Require a clear, deliberate swipe (and ignore tiny/scroll-ish drags)
+  const THRESHOLD = 60;
+  if (Math.max(Math.abs(dx), Math.abs(dy)) < THRESHOLD) return;
+
   if (Math.abs(dx) > Math.abs(dy)) {
-    // Horizontal swipe
-    if (dx < -50) nextSlide();
-    else if (dx > 50) prevSlide();
+    dx < 0 ? nextSlide() : prevSlide();   // horizontal swipe
   } else {
-    // Vertical swipe
-    if (dy < -50) nextSlide();
-    else if (dy > 50) prevSlide();
+    dy < 0 ? nextSlide() : prevSlide();   // vertical swipe
   }
 }, { passive: true });
 
-/* ── Mouse Wheel ── (debounced so one scroll = one slide) */
-let wheelTimer;
+/* ── Mouse Wheel / Trackpad ──
+   One decisive scroll = one slide. We accumulate delta to a threshold then
+   lock for the length of a transition, so inertial trackpad scrolling can't
+   skip several slides at once (the old behaviour that felt twitchy). */
+let wheelLock = false;
+let wheelAccum = 0;
+let wheelIdle;
 document.addEventListener('wheel', e => {
-  clearTimeout(wheelTimer);
-  wheelTimer = setTimeout(() => {
-    if (e.deltaY > 30)  nextSlide();
-    if (e.deltaY < -30) prevSlide();
-  }, 60);
+  if (document.body.classList.contains('lab-active')) return;  // Lab scrolls freely
+  if (isTransitioning || wheelLock) return;
+
+  wheelAccum += e.deltaY;
+
+  // If the user pauses, forget the partial scroll so old drift can't trigger.
+  clearTimeout(wheelIdle);
+  wheelIdle = setTimeout(() => { wheelAccum = 0; }, 160);
+
+  if (Math.abs(wheelAccum) < 45) return;   // needs a deliberate push
+
+  const dir = wheelAccum > 0 ? 1 : -1;
+  wheelAccum = 0;
+  wheelLock = true;
+  setTimeout(() => { wheelLock = false; }, 850);   // cool-down ≈ one transition
+
+  dir > 0 ? nextSlide() : prevSlide();
 }, { passive: true });
 
 
