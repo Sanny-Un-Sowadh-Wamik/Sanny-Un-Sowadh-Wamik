@@ -106,7 +106,7 @@ I'm just as comfortable in SQL and Power BI or Tableau, turning large, messy dat
 - **An interactive Data Lab:** beat a fraud-detection model, break a regression, train a neural net live in the browser, and try to out-guess a noisy market. Collect every card in the Data Dex.
 - **English and 日本語**, a full-screen mobile menu, keyboard support, and a Reduce Motion mode that turns the animation off.
 
-Built with TanStack Start, React 19, Vite, Tailwind CSS and Vercel. The source of the current version is on the [`portfolio-react` branch](https://github.com/Sanny-Un-Sowadh-Wamik/Sanny-Un-Sowadh-Wamik/tree/portfolio-react).
+Built with TanStack Start, React 19, Vite, Tailwind CSS and Vercel. The full source is in this repository.
 
 ## GitHub
 
