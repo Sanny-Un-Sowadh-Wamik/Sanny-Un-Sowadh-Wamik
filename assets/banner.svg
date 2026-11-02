@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 380" width="1200" height="380" role="img" aria-labelledby="t d">
+  <title id="t">Sanny Un Sowadh Wamik, Data Scientist</title>
+  <desc id="d">Portfolio banner: a Poké Ball rolls along a progress bar under the name, and a second ball wobbles like a catch.</desc>
+  <style>
+    .sans { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+    .mono { font-family: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace; }
+    .name { font-weight: 800; font-size: 80px; letter-spacing: -3px; }
+    .eyebrow { font-weight: 600; font-size: 14px; letter-spacing: 3.4px; fill: #55555d; }
+    .sub { font-weight: 500; font-size: 23px; fill: #2b2b33; }
+    .tags { font-weight: 600; font-size: 14px; letter-spacing: 1.6px; fill: #55555d; }
+    .url { font-weight: 700; font-size: 15px; letter-spacing: 1.4px; fill: #ffffff; }
+
+    .roll { transform-box: fill-box; transform-origin: center; animation: travel 9s cubic-bezier(.45,.05,.3,1) infinite; }
+    .spin { transform-box: fill-box; transform-origin: center; animation: spin 9s cubic-bezier(.45,.05,.3,1) infinite; }
+    .hop  { transform-box: fill-box; transform-origin: center; animation: hop .55s ease-in-out infinite alternate; }
+    .fill { transform-box: fill-box; transform-origin: left center; animation: fill 9s cubic-bezier(.45,.05,.3,1) infinite; }
+    .catch { transform-box: fill-box; transform-origin: center bottom; animation: wobble 4.2s ease-in-out infinite; }
+    .twinkle { transform-box: fill-box; transform-origin: center; animation: twinkle 2.6s ease-in-out infinite; }
+    .twinkle.b { animation-delay: .9s; } .twinkle.c { animation-delay: 1.7s; }
+
+    @keyframes travel { 0% { transform: translateX(0); } 70% { transform: translateX(1072px); } 100% { transform: translateX(1072px); } }
+    @keyframes spin   { 0% { transform: rotate(0); } 70% { transform: rotate(1440deg); } 100% { transform: rotate(1440deg); } }
+    @keyframes hop    { from { transform: translateY(0); } to { transform: translateY(-14px); } }
+    @keyframes fill   { 0% { transform: scaleX(0); } 70% { transform: scaleX(1); } 100% { transform: scaleX(1); } }
+    @keyframes wobble { 0%, 58%, 100% { transform: rotate(0); } 62% { transform: rotate(-16deg); } 68% { transform: rotate(14deg); } 74% { transform: rotate(-11deg); } 80% { transform: rotate(8deg); } 86% { transform: rotate(0); } }
+    @keyframes twinkle { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.6); } }
+    @media (prefers-reduced-motion: reduce) { .roll, .spin, .hop, .fill, .catch, .twinkle { animation: none; } .fill { transform: scaleX(.6); } }
+  </style>
+
+  <defs>
+    <symbol id="ball" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="30" fill="#24242b"/>
+      <path d="M 4 32 A 28 28 0 0 1 60 32 Z" fill="#d1342a"/>
+      <path d="M 4 32 A 28 28 0 0 0 60 32 Z" fill="#ece8df"/>
+      <rect x="2" y="29" width="60" height="6" fill="#24242b"/>
+      <circle cx="32" cy="32" r="8" fill="#24242b"/>
+      <circle cx="32" cy="32" r="5" fill="#ece8df"/>
+    </symbol>
+  </defs>
+
+  <!-- card with a hard offset shadow, like the site -->
+  <rect x="10" y="10" width="1186" height="366" rx="28" fill="#1c1c22"/>
+  <rect x="2" y="2" width="1186" height="366" rx="28" fill="#f1efe9" stroke="#1c1c22" stroke-width="4"/>
+
+  <!-- left: type -->
+  <rect x="64" y="55" width="46" height="3" rx="1.5" fill="#d1342a"/>
+  <text x="124" y="62" class="mono eyebrow">PORTFOLIO / 2026</text>
+  <text x="62" y="152" class="sans name" fill="#1c1c22">Sanny Un</text>
+  <text x="62" y="232" class="sans name" fill="#d1342a">Sowadh Wamik</text>
+  <text x="64" y="278" class="sans sub">Data scientist building production ML systems.</text>
+  <text x="64" y="312" class="mono tags">PYTHON  ·  SQL  ·  XGBOOST  ·  MLFLOW  ·  FASTAPI  ·  DOCKER</text>
+
+  <!-- right: a flat disc, a ball that wobbles like a catch, and a few sparks -->
+  <circle cx="985" cy="150" r="124" fill="#d1342a" opacity=".15"/>
+  <g class="catch"><use href="#ball" x="911" y="76" width="148" height="148"/></g>
+  <path class="twinkle"   d="M 1112 62 l 6 16 16 6 -16 6 -6 16 -6 -16 -16 -6 16 -6 z" fill="#f5c518"/>
+  <path class="twinkle b" d="M 846 214 l 4 11 11 4 -11 4 -4 11 -4 -11 -11 -4 11 -4 z" fill="#d1342a"/>
+  <path class="twinkle c" d="M 1086 224 l 3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3 z" fill="#1c1c22"/>
+  <rect x="893" y="248" width="184" height="34" rx="17" fill="#d1342a"/>
+  <text x="985" y="270" text-anchor="middle" class="mono url">sannywamik.com</text>
+
+  <!-- bottom: the scroll-bar ball -->
+  <rect x="64" y="342" width="1072" height="6" rx="3" fill="#1c1c22" opacity=".14"/>
+  <rect class="fill" x="64" y="342" width="1072" height="6" rx="3" fill="#d1342a"/>
+  <g class="roll"><g class="hop"><g class="spin"><use href="#ball" x="49" y="318" width="30" height="30"/></g></g></g>
+</svg>
