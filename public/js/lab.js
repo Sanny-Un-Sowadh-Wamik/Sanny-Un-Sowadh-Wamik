@@ -853,10 +853,6 @@
       mods.violin      = makeViolin();
       mods.treemap     = makeTreemap();
 
-      document.querySelectorAll('.lab-tab').forEach(btn => {
-        btn.addEventListener('click', () => switchTab(btn.dataset.lab));
-      });
-
       // Re-fit the visible module on resize (debounced to one frame)
       let raf = null;
       window.addEventListener('resize', () => {
@@ -892,7 +888,10 @@
       syncLoop();
     }
 
-    return { onSlideShown };
+    /** Stop all classic-tool animation (used when a React game tab is showing). */
+    function pause() { stopLoop(); if (mods.kmeans) mods.kmeans.stop(); }
+
+    return { onSlideShown, switchTab, pause };
   })();
 
   window.DataLab = DataLab;
