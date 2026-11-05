@@ -2120,7 +2120,9 @@ article.stack-card:active { scale: calc(1 - var(--p, 0) * 0.05); }
 
 /* Touch / small screens: no scroll-linked scale, translate or darkening on the stack */
 @media (pointer: coarse), (max-width: 767px) {
-  article.stack-card { scale: 1 !important; translate: 0 0 !important; will-change: auto; }
+  /* iOS Safari repositions sticky elements out of step with scrolling (measured ±3pt jitter on a
+     screen recording), so on phones the cards are a normal list instead of a pinned stack. */
+  article.stack-card { position: relative !important; top: auto !important; margin-bottom: 1.5rem; scale: 1 !important; translate: 0 0 !important; will-change: auto; }
   article.stack-card:active { scale: 1 !important; }
   article.stack-card::before { display: none; }
 }
