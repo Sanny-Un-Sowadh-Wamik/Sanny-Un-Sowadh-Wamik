@@ -2107,3 +2107,13 @@ html.menu-open { overflow: hidden; }
 .ball-arrow { display: inline-block; margin-left: 6px; animation: ball-arrow 0.9s ease-in-out infinite; }
 @keyframes ball-arrow { 0%, 100% { translate: 0 0; } 50% { translate: 6px 0; } }
 @media (prefers-reduced-motion: reduce) { .ball-arrow { animation: none; } }
+
+/* Key works stack: scale is driven by scroll every frame, so it must never be transitioned
+   (the touch spring on article.spot made the cards shake while scrolling on mobile). */
+article.stack-card,
+article.stack-card.spot {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  will-change: scale, translate;
+  backface-visibility: hidden;
+}
+article.stack-card:active { scale: calc(1 - var(--p, 0) * 0.05); }
