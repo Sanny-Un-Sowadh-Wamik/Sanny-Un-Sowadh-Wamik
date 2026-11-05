@@ -2118,18 +2118,15 @@ article.stack-card.spot {
 }
 article.stack-card:active { scale: calc(1 - var(--p, 0) * 0.05); }
 
-/* Touch / small screens: no scroll-linked scale, translate or darkening on the stack */
+/* Touch / small screens: the stack stays sticky (pure CSS, no scroll-linked JS).
+   Each card gets its own compositor layer so iOS Safari pins it smoothly, and the section
+   must not clip overflow or Safari can fall back to main-thread sticky (which jitters). */
+#work { overflow-x: visible; overflow: visible; }
 @media (pointer: coarse), (max-width: 767px) {
-  /* iOS Safari repositions sticky elements out of step with scrolling (measured ±3pt jitter on a
-     screen recording), so on phones the cards are a normal list instead of a pinned stack. */
-  article.stack-card { position: relative !important; top: auto !important; margin-bottom: 0; flex: 0 0 86%; scroll-snap-align: center; scale: 1 !important; translate: 0 0 !important; will-change: auto; }
-  /* Swipeable snap carousel: native scrolling only, no sticky and no scroll listeners */
-  .stack {
-    display: flex; align-items: flex-start; gap: 16px; overflow-x: auto; overflow-y: hidden;
-    scroll-snap-type: x mandatory; scroll-padding-inline: 1.5rem; overscroll-behavior-x: contain;
-    margin-inline: -1.5rem; padding: 0 1.5rem 14px; scrollbar-width: none;
+  article.stack-card, article.stack-card.spot {
+    scale: 1 !important; translate: 0 0 !important;
+    transform: translate3d(0, 0, 0); will-change: transform; backface-visibility: hidden;
   }
-  .stack::-webkit-scrollbar { display: none; }
   article.stack-card:active { scale: 1 !important; }
   article.stack-card::before { display: none; }
 }

@@ -1037,15 +1037,24 @@ function Header({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
   });
 
   useEffect(() => {
-    const onScroll = () => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
       const y = window.scrollY;
       setScrolled(y > 24);
       const h = document.documentElement.scrollHeight - window.innerHeight;
       setProgress(h > 0 ? Math.min(1, y / h) : 0);
     };
-    onScroll();
+    // One state update per frame instead of one per scroll event
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
 
   useEffect(() => {
@@ -1892,7 +1901,7 @@ function ProjectsFeatured({ lang }: { lang: Lang }) {
               <RiseTitle text={T(lang, { en: "Key works", jp: "主要作品" })} />
             </h2>
             <p className="mt-4">
-              <Clue id="stack"><Both mouse={T(lang, { en: "Keep scrolling: the cards stack", jp: "スクロールするとカードが重なります" })} touch={T(lang, { en: "Swipe the cards →", jp: "カードをスワイプ →" })} /></Clue>
+              <Clue id="stack">{T(lang, { en: "Keep scrolling: the cards stack", jp: "スクロールするとカードが重なります" })}</Clue>
             </p>
           </div>
         </div>
