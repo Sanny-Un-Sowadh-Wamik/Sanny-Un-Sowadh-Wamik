@@ -2124,9 +2124,27 @@ article.stack-card:active { scale: calc(1 - var(--p, 0) * 0.05); }
 #work { overflow-x: visible; overflow: visible; }
 @media (pointer: coarse), (max-width: 767px) {
   article.stack-card, article.stack-card.spot {
-    scale: 1 !important; translate: 0 0 !important;
     transform: translate3d(0, 0, 0); will-change: transform; backface-visibility: hidden;
   }
-  article.stack-card:active { scale: 1 !important; }
-  article.stack-card::before { display: none; }
+  article.stack-card:active { scale: calc(1 - var(--p, 0) * 0.05); }
+}
+
+/* Depth effect: each card recedes (shrinks and darkens) as the next one slides over it.
+   Driven by CSS scroll timelines, so the browser animates it off the main thread in lock-step
+   with scrolling. The next card's own position is the timeline, so no JavaScript is involved.
+   Browsers without support keep the plain sticky stack. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .stack { timeline-scope: --c2, --c3, --c4; }
+    .stack-card:nth-child(2) { view-timeline: --c2 block; }
+    .stack-card:nth-child(3) { view-timeline: --c3 block; }
+    .stack-card:nth-child(4) { view-timeline: --c4 block; }
+    .stack-card:nth-child(1), .stack-card:nth-child(1)::before { animation-timeline: --c2; }
+    .stack-card:nth-child(2), .stack-card:nth-child(2)::before { animation-timeline: --c3; }
+    .stack-card:nth-child(3), .stack-card:nth-child(3)::before { animation-timeline: --c4; }
+    .stack-card:nth-child(-n+3) { animation-name: stack-recede; animation-timing-function: linear; animation-fill-mode: both; animation-range: cover 5% cover 33%; }
+    .stack-card:nth-child(-n+3)::before { animation-name: stack-dim; animation-timing-function: linear; animation-fill-mode: both; animation-range: cover 5% cover 33%; }
+    @keyframes stack-recede { from { scale: 1; translate: 0 0; } to { scale: 0.95; translate: 0 -6px; } }
+    @keyframes stack-dim { from { opacity: 0; } to { opacity: 0.16; } }
+  }
 }

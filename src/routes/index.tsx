@@ -1859,6 +1859,8 @@ function ProjectsFeatured({ lang }: { lang: Lang }) {
   useEffect(() => {
     const root = stackRef.current;
     if (!root || reducedMotion()) return;
+    // Browsers with CSS scroll timelines animate this in CSS (see .stack-card in styles.css)
+    if (typeof CSS !== "undefined" && CSS.supports("animation-timeline", "view()")) return;
     // Phones: scroll events lag the compositor's sticky positioning, so a JS-driven
     // scale/translate makes the cards shake. Keep plain sticky stacking there.
     if (window.matchMedia("(pointer: coarse), (max-width: 767px)").matches) return;
