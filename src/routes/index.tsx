@@ -1430,7 +1430,7 @@ function Hero({ lang }: { lang: Lang }) {
   );
 
   return (
-    <section ref={heroRef} id="top" className="relative flex min-h-[100dvh] flex-col overflow-hidden pt-28 md:min-h-[100dvh] md:pt-36">
+    <section ref={heroRef} id="top" className="relative flex min-h-[100svh] flex-col overflow-hidden pt-28 md:min-h-[100svh] md:pt-36">
       
 
       {/* Floating Poké Ball accent */}
@@ -1902,7 +1902,7 @@ function ProjectsFeatured({ lang }: { lang: Lang }) {
             <article
               key={p.num}
               style={{ "--i": i } as React.CSSProperties}
-              className="stack-card spot reveal grid grid-cols-12 gap-x-6 gap-y-4 p-6 sm:p-10"
+              className="stack-card spot grid grid-cols-12 gap-x-6 gap-y-4 p-6 sm:p-10"
             >
               <div className="col-span-12 flex items-baseline justify-between gap-4 md:col-span-2 md:block">
                 <div className="font-bold text-5xl text-accent-ink sm:text-6xl">{p.num}</div>

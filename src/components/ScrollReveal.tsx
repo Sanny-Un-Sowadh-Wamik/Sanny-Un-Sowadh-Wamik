@@ -29,7 +29,7 @@ export function ScrollReveal() {
       const h = el as HTMLElement;
       // Skip elements that are huge wrappers (full viewport hero already in view)
       // or already explicitly animated.
-      if (h.dataset.revealReady === "1") return;
+      if (h.dataset.revealReady === "1" || h.classList.contains("stack-card")) return;
       h.dataset.revealReady = "1";
 
       // Pick a variant per tag
