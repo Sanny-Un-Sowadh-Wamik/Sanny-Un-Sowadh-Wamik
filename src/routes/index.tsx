@@ -1892,7 +1892,7 @@ function ProjectsFeatured({ lang }: { lang: Lang }) {
               <RiseTitle text={T(lang, { en: "Key works", jp: "主要作品" })} />
             </h2>
             <p className="mt-4">
-              <Clue id="stack">{T(lang, { en: "Keep scrolling: the cards stack", jp: "スクロールするとカードが重なります" })}</Clue>
+              <Clue id="stack"><Both mouse={T(lang, { en: "Keep scrolling: the cards stack", jp: "スクロールするとカードが重なります" })} touch={T(lang, { en: "Swipe the cards →", jp: "カードをスワイプ →" })} /></Clue>
             </p>
           </div>
         </div>
