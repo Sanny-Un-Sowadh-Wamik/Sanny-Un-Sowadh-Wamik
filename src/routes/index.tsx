@@ -1219,7 +1219,7 @@ function Hero({ lang }: { lang: Lang }) {
   };
 
   useEffect(() => {
-    if (reducedMotion()) return;
+    if (reducedMotion() || window.matchMedia("(pointer: coarse)").matches) return;
     const onScroll = () => {
       const el = charRef.current;
       if (el) el.style.translate = `0 ${(-window.scrollY * 0.07).toFixed(1)}px`;

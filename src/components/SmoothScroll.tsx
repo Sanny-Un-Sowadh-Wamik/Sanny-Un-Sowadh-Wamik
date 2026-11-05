@@ -10,6 +10,9 @@ export function SmoothScroll() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Touch devices already have native momentum scrolling; running Lenis on top of it
+    // fights sticky positioning (the Key works cards shook while scrolling).
+    if (window.matchMedia("(pointer: coarse)").matches) return;
 
     const lenis = new Lenis({
       duration: 1.15,
